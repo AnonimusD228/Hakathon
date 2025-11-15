@@ -1,12 +1,12 @@
 import pygame as pg
 import pygame.time
-from sperminvaders import *
+from space_invaders import *
 # from survivors import *
 from settings import *
 # from title import *
 from page import pages,id
 from survivors import Survivors
-from uranik import Uranik
+from uranik import *
 from shop import *
 from mathgame import *
 pg.init()
@@ -14,11 +14,12 @@ from currency import neutrons
 
 screen=pg.display.set_mode([screen_width,screen_height])
 clock=pg.time.Clock()
-minigames=[Sperm_invaders(),Survivors(),Mathgame()]
+minigames=[Space_invaders(), Survivors(), Mathgame()]
 
 page = pages[id]
 shop = ShopRoulette()
 uranik = Uranik()
+soap=Soap([950,700],100,100)
 minigame=False
 start=True
 if  __name__ == "__main__":
@@ -35,14 +36,15 @@ if  __name__ == "__main__":
             if event.type==pg.QUIT:
                 pg.quit()
 
-        # sperm_invaders.update()
-        # sperm_invaders.draw(screen)
+
         # surv.update()
         # surv.draw(screen)
+        uranik.dirt,uranik.happines=soap.update(mp,mc,uranik.dirt,uranik.happiness)
         neutrons.update()
         uranik.update(mp,mc,id)
         uranik.draw_bars(screen,id)
         neutrons.draw(screen)
+
         pg.display.flip()
         screen.fill(bg_color)
 
@@ -58,8 +60,10 @@ if  __name__ == "__main__":
                 start=False
             minigames[id - 3].draw(screen)
             if minigames[id - 3].update()==1:
-                print('ESC')
+
                 id=0
+                uranik.dirt.append(Dirt())
+                uranik.happiness-=dirt_def
                 minigame = False
                 start = True
             continue
@@ -70,6 +74,7 @@ if  __name__ == "__main__":
         page.draw(screen)
         if id == 1:
             uranik.draw(screen)
+            soap.draw(screen)
         elif id==2:
             uranik.energy=shop.run(mp,mc,screen,uranik.energy)
 

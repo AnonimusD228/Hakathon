@@ -34,6 +34,10 @@ class Neutron:
         self.txt=f"Neutrons: {self.neutrons}"
         self.label.update_text(self.txt)
         self.label.update_size(self.cur_size)
+    def del_n(self,q):
+        self.neutrons = max(self.neutrons-q,0)
+        self.txt = f"Neutrons: {self.neutrons}"
+        self.label.update_text(self.txt)
     def update(self):
         if self.cur_size!=self.main_size:
             self.cur_size-=1

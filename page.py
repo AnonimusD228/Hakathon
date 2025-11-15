@@ -25,7 +25,7 @@ buttons= {
     'minigames'  : Button('minigames',screen_width/6,screen_height/12,[300,0],5,50,color1,color2,fontcolor,pos_type=0),
     'home'  : Button('home',screen_width/6,screen_height/12,[500,0],5,50,choice_color,choice_color2,fontcolor,pos_type=0),
     'shop'  : Button('shop',screen_width/6,screen_height/12,[700,0],5,50,color1,color2,fontcolor,pos_type=0),
-'sperm invaders'  : Button('sperm invaders',300,300,[75,250],5,50,color1,color2,fontcolor,pos_type=0),
+'space invaders'  : Button('space invaders',300,300,[75,250],5,50,color1,color2,fontcolor,pos_type=0),
 'survivors'  : Button('survivors',300,300,[450,250],5,50,color1,color2,fontcolor,pos_type=0),
 'mathgame'  : Button('mathgame',300,300,[825,250],5,50,color1,color2,fontcolor,pos_type=0),
 
@@ -78,7 +78,7 @@ class Page:
                     buttons['shop'].bottom_color = choice_color2
 
                 if id<3:
-                    if name=='sperm invaders':
+                    if name=='space invaders':
 
                         id = 3
                     elif name=='survivors':
@@ -108,7 +108,7 @@ class Page:
 
 
 pages=[
-    Page('minigames',[],['home','shop','minigames','sperm invaders','mathgame','survivors'],bg_image='pixil-frame-0(11).png'),
+    Page('minigames',[],['home','shop','minigames','space invaders','mathgame','survivors'],bg_image='pixil-frame-0(11).png'),
     Page('home',[],['home','shop','minigames'],bg_image='pixil-frame-0(9).png'),
     Page('shop',[],['home','shop','minigames'],bg_image='pixil-frame-0(10).png'),
 ]

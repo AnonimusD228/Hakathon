@@ -1,8 +1,10 @@
+import random
+
 import pygame.image
 from assets import *
 # from gambling import energy
 # from gambling import energy
-from sperminvaders import *
+from space_invaders import *
 from settings import *
 from currency import neutrons
 global neutrons
@@ -14,10 +16,19 @@ dirt_images=[
     pygame.transform.scale(pygame.image.load('brudy/pixil-frame-3.png'),[50,50]),
 ]
 
+dirt_def = 10
+
 class Dirt:
     def __init__(self):
-        self.img=
-        pass
+        self.img=dirt_images[random.randint(0,3)]
+        self.pos=[random.randint(600-100,600+100),random.randint(600-100,600+100)]
+        self.rect=self.img.get_rect()
+        self.rect.center=self.pos
+
+    def draw(self,screen):
+        screen.blit(self.img,[self.pos[0]-25,self.pos[1]-25])
+
+
 
 
 class Feed:
@@ -36,8 +47,8 @@ class Feed:
         if not mc[0]:
             if uranik.rect.collidepoint(mp):
                 uranik.neutronlevel+=min(30,neutrons.neutrons)
-                uranik.neutronlevel=max(uranik.neutronlevel,uranik.max_n)
-                neutrons.neutrons-=min(30,neutrons.neutrons)
+                uranik.neutronlevel=min(uranik.neutronlevel,uranik.max_n)
+                neutrons.del_n(min(30,neutrons.neutrons))
             self.active=False
             return
     def draw(self,screen):
@@ -47,8 +58,29 @@ class Feed:
             screen.blit(self.neutron,(mp[0]-self.neutron.get_width()/2,mp[1]-self.neutron.get_height()/2))
 class Soap:
     def __init__(self,pos,w,h):
-        self.rect=pg.Rect(pos,(w,h))
-        self.image=pg.transform.scale(pg.image.load("wiadro.png"),(w,h))
+        self.rect=pg.Rect([pos[0]-w/2,pos[1]-h/2],(w,h))
+        self.image=pg.transform.scale(pg.image.load("mydełko.png"),(w,h))
+        self.w,self.h=w,h
+        self.pos=pos
+
+    def update(self,mp,mc,dirts,happiness):
+        if mc[0] and self.rect.collidepoint(mp):
+            self.rect.center=mp
+            for i in range(len(dirts)-1,-1,-1):
+                if self.rect.colliderect(dirts[i].rect):
+                    dirts.pop(i)
+                    happiness+=dirt_def
+        else:
+            self.rect.center=self.pos
+
+        return dirts,happiness
+
+    def draw(self,screen):
+        screen.blit(self.image,self.rect)
+
+
+
+
 class Bar:
     def __init__(self,pos,width,height,first_colour,second_colour,image):
         self.rect=pg.Rect(pos,(width,height))
@@ -75,7 +107,7 @@ class Bar2:
         screen.blit(self.image,self.image_rect)
 class Uranik:
     def __init__(self):
-        self.pos=[600,400]
+        self.pos=[600,600]
         self.max_h=100
         self.max_n=100
         self.happiness = self.max_h
@@ -91,7 +123,7 @@ class Uranik:
         self.animations=[[pygame.transform.scale(pygame.image.load('idle1.png'),self.size),pygame.transform.scale(pygame.image.load('idle2.png'),self.size)],
                          [pygame.transform.scale(pygame.image.load('horny.png'),self.size)]]
         self.rect=self.animations[0][0].get_rect()
-        self.rect.center=[600,600]
+        self.rect.center=self.pos
 
         self.happiness_bar=Bar((1000,150),50,450,(200, 0, 0),(100, 0, 0),"happiness.png")
         self.neutron_bar=Bar((1100,150),50,450,(0, 128, 255),(10, 78, 145),"saturation.png")
@@ -164,6 +196,8 @@ class Uranik:
         screen.blit(self.animations[self.state][self.animation],self.rect)
         self.feed.draw(screen)
         for i in self.hearts:
+            i.draw(screen)
+        for i in self.dirt:
             i.draw(screen)
 
 

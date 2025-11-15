@@ -33,8 +33,8 @@ class Enemy:
         res_pos=random_unit_vector()
         self.rect.center=(screen_width/2-res_pos[0]*l,screen_height/2-res_pos[1]*l)
 
-        health_ranges=[(2,6),(8,12),(15,20)]
-        speed_ranges=[(5,7),(3,6),(1,3)]
+        health_ranges=[(2,6),(6,10),(13,15)]
+        speed_ranges=[(5,6),(3,4),(2,3)]
         self.image=images[self.type]
         self.speed=random.randint(speed_ranges[self.type][0],speed_ranges[self.type][1])
         self.max_health=random.randint(health_ranges[self.type][0],health_ranges[self.type][1])
@@ -78,7 +78,7 @@ class Enemy:
             return False
         if self.health<=0:
             self.active=False
-            particles.append(Particles(self.rect.center,60,10,20,neutron_image,(30,30),fading=False))
+            particles.append(Particles(self.rect.center,60,10,random.randint(5,15),neutron_image,(30,30),fading=False))
             self.update_respawn()
             return False
         self.move(target)
@@ -157,13 +157,14 @@ class Player:
                 self.bullets.pop(i)
     # def update_icons(self):
     #     self.push_icon.update(self.cur_push)
-    def update(self,enemys):
+    def update(self,enemys,particles):
 
         keys=pg.key.get_pressed()
         if not self.strength:
             self.damage=1
         else:
             self.strength-=1
+            particles.append(Particles(self.rect.center,30,3,1,None,(20,20),color=(0,200,0),nf=True))
         if self.cur_shoot_delay==0:
             if keys[pg.K_SPACE]:
                 bullet_vel=8
@@ -236,7 +237,7 @@ class item:
             self.update_respawn()
             self.active=False
             return
-        player.strength=120
+        player.strength=500
         player.damage=3
         self.update_respawn()
         self.active=False
@@ -279,8 +280,9 @@ class Survivors:
             return 1
 
         if self.player.health>0:
-            self.image.blit(self.bg,(0,0))
-            self.player.update(self.enemys)
+            self.image.blit(self.bg,(0,0
+                                     ))
+            self.player.update(self.enemys,self.particles)
             for i in self.enemys:
                 if i.update(self.enemys_scale,self.enemys_images,self.particles,self.player.rect.center,self.player):
                     self.player.get_damage(i.damage)
