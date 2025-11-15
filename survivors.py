@@ -33,7 +33,7 @@ class Enemy:
         res_pos=random_unit_vector()
         self.rect.center=(screen_width/2-res_pos[0]*l,screen_height/2-res_pos[1]*l)
 
-        health_ranges=[(2,6),(6,10),(13,15)]
+        health_ranges=[(2,6),(6,10),(11,13)]
         speed_ranges=[(5,6),(3,4),(2,3)]
         self.image=images[self.type]
         self.speed=random.randint(speed_ranges[self.type][0],speed_ranges[self.type][1])
@@ -211,7 +211,7 @@ class Player:
         self.health=max(self.health-damage,0)
 class item:
     def __init__(self):
-        self.respawn_delay=(400,800)
+        self.respawn_delay=(300,500)
         self.active=False
         self.update_respawn()
     def update_respawn(self):

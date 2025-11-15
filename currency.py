@@ -23,7 +23,7 @@ class label():
         self.update_text(self.txt)
 class Neutron:
     def __init__(self):
-        self.neutrons=300
+        self.neutrons=0
         self.txt=f"Neutrons: {self.neutrons}"
         self.main_size=45
         self.cur_size=self.main_size

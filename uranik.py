@@ -110,7 +110,7 @@ class Uranik:
         self.pos=[600,600]
         self.max_h=100
         self.max_n=100
-        self.happiness = self.max_h
+        self.happiness = self.max_h/2
         self.neutronlevel = self.max_n
         self.size=[300,300]
         self.time = -1

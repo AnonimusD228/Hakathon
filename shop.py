@@ -153,14 +153,10 @@ _ in range(5)]
         # FIX: do not overwrite mp
         local_mp = (mp[0] - x, mp[1] - y)
 
-        print(local_mp)
-        print(self.spin_button)
 
         if mc[0]:
-            print('mc')
             if self.spin_button.collidepoint(local_mp) and not self.spinning:
                 self.start_spin()
-                print('start')
 
             if not self.spinning:
                 for idx, item in enumerate(self.roulette_results):

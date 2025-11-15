@@ -45,7 +45,7 @@ class Enemy:
             return
         if self.health<=0:
             self.active=False
-            particles.append(Particles(self.rect.center,60,10,20,neutron_image,(30,30),fading=False))
+            particles.append(Particles(self.rect.center,60,10,random.randint(5,20),neutron_image,(30,30),fading=False))
             self.update_respawn()
             return
         self.rect.y+=self.speed

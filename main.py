@@ -1,3 +1,5 @@
+import random
+
 import pygame as pg
 import pygame.time
 from space_invaders import *
@@ -62,8 +64,9 @@ if  __name__ == "__main__":
             if minigames[id - 3].update()==1:
 
                 id=0
-                uranik.dirt.append(Dirt())
-                uranik.happiness-=dirt_def
+                for i in range(random.randint(1,3)):
+                    uranik.dirt.append(Dirt())
+                    uranik.happiness-=dirt_def
                 minigame = False
                 start = True
             continue
